@@ -1,8 +1,6 @@
 export default function Filter({ setSearch, search, persons, setPersons }) {
   const handleSearch = (e) => {
-    e.preventDefault();
     setSearch(e.target.value);
-
     const newPeople = persons.filter((person) =>
       person.name.toLocaleLowerCase().includes(search)
     );
