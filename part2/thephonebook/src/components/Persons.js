@@ -5,7 +5,7 @@ export default function Persons({ persons }) {
     <div>
       {persons.map((person) => (
         <SinglePerson
-          key={person.id}
+          key={person.name}
           name={person.name}
           number={person.number}
         />

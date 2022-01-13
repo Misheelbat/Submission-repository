@@ -1,11 +1,6 @@
-export default function Filter({ setSearch, search, persons, setPersons }) {
+export default function Filter({ setSearch, search }) {
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    const newPeople = persons.filter((person) =>
-      person.name.toLocaleLowerCase().includes(search)
-    );
-    setPersons([...newPeople]);
-    console.log(newPeople);
   };
 
   return (
