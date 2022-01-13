@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 function App() {
   const [name, setName] = useState("");
   const [countries, setCountries] = useState([]);
-  let languages = [];
+  const [show, setShow] = useState("");
 
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((response) => {
@@ -24,12 +24,13 @@ function App() {
     }
   });
 
-  if (sCountries.length === 1) {
-    let lang = sCountries[0].languages;
-    for (let key in lang) {
-      languages.push(lang[key]);
+  const handleClick = (id) => {
+    setShow(id);
+    if (id === show) {
+      setShow("");
     }
-  }
+  };
+
   console.log(sCountries);
   return (
     <div className="App">
@@ -40,9 +41,30 @@ function App() {
       )}
       {sCountries.length >= 2 && sCountries.length <= 10 && (
         <div>
-          {sCountries.map((country) => {
-            return <div key={country.name.common}>{country.name.common}</div>;
-          })}
+          {sCountries.map((country) => (
+            <div key={country.name.common}>
+              {country.name.common}
+              <button
+                type="button"
+                onClick={() => handleClick(country.name.common)}
+              >
+                show
+              </button>
+              {show === country.name.common && (
+                <div>
+                  <div>capital: {country.capital}</div>
+                  <div>population: {country.population}</div>
+                  <h2>languages</h2>
+                  <ul>
+                    {[...Object.values(country.languages)].map((a) => (
+                      <li key={a}>{a}</li>
+                    ))}
+                  </ul>
+                  <img src={country.flags.png} alt="flag" />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
       {sCountries.length === 1 && (
@@ -52,8 +74,8 @@ function App() {
           <div>population: {sCountries[0].population}</div>
           <h2>languages</h2>
           <ul>
-            {languages.map((language) => (
-              <li key={language}>{language}</li>
+            {[...Object.values(sCountries[0].languages)].map((a) => (
+              <li>{a}</li>
             ))}
           </ul>
           <img src={sCountries[0].flags.png} alt="flag" />
