@@ -5,7 +5,10 @@ function App() {
   const [name, setName] = useState("");
   const [countries, setCountries] = useState([]);
   const [show, setShow] = useState("");
+  const key = process.env.REACT_APP_API_KEY;
 
+  
+  console.log(key);
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((response) => {
       setCountries(response.data);
@@ -75,7 +78,7 @@ function App() {
           <h2>languages</h2>
           <ul>
             {[...Object.values(sCountries[0].languages)].map((a) => (
-              <li>{a}</li>
+              <li key={a}>{a}</li>
             ))}
           </ul>
           <img src={sCountries[0].flags.png} alt="flag" />
