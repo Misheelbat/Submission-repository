@@ -5,35 +5,19 @@ export default function SingleCountry({ sCountries }) {
   const [weather, setWeather] = useState(null);
   const country = sCountries[0];
   const apiKey = process.env.REACT_APP_API_KEY;
+  const city = country.capital;
+  const base = `?q=${city}&units=metric&appid=${apiKey}`;
+  const query = "https://api.openweathermap.org/data/2.5/weather";
 
-  const getLocationId = async (n) => {
-    const name = await country.capital;
-    const base =
-      "http://dataservice.accuweather.com/locations/v1/cities/search";
-    const query = `?apikey=${apiKey}&q=${name}`;
-
-    const response = await axios.get(base + query);
-    const data = await response.data;
-    return data[0].Key;
-  };
-  const getWeather = async (i) => {
-    const cBase = "http://dataservice.accuweather.com/currentconditions/v1/";
-    const cQuery = `${i}?apikey=${apiKey}&details=true`;
-
-    const response = await axios.get(cBase + cQuery);
-    const data = await response.data;
-    return data;
-  };
-
-  const we = async () => {
-    const id = await getLocationId();
-    const weather = await getWeather(id);
-    setWeather(weather[0]);
-  };
   useEffect(() => {
-    we();
-    console.log("inside", weather);
+    axios.get(query + base).then((response) => {
+      console.log("this is response", response);
+      const apiRes = response.data;
+      console.log("data", apiRes);
+      setWeather(apiRes);
+    });
   }, []);
+  console.log("weather", weather);
 
   return (
     <div>
@@ -49,17 +33,19 @@ export default function SingleCountry({ sCountries }) {
       <img src={country.flags.png} alt="flag" />
       <div>
         <h2>Weather in {country.capital}</h2>
-        <div>
-          {weather !== null && (
-            <div>
-              <p>temperature: {weather.Temperature.Metric.Value}° Celcius</p>
-              <p>
-                wind: {weather.Wind.Speed.Metric.Value} km/h direction{" "}
-                {weather.Wind.Direction.Localized}
-              </p>
-            </div>
-          )}
-        </div>
+        {weather !== null && (
+          <div>
+            <p>temperature: {weather.main.temp}° Celcius</p>
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              alt="icon"
+            />
+            <p>
+              wind: {weather.wind.speed} m/s direction {weather.wind.deg}{" "}
+              degrees
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
