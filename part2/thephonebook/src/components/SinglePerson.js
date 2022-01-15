@@ -1,7 +1,10 @@
-export default function SinglePerson({ name, number }) {
+export default function SinglePerson({ person, handleDelete }) {
   return (
     <div>
-      {name} {number}
+      {person.name} {person.number}
+      <button onClick={() => handleDelete(person.id, person.name)}>
+        delete
+      </button>
     </div>
   );
 }
