@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default function PersonForm({ ...props }) {
   const { newName, setNewName, newNumber, setNewNumber, persons, setPersons } =
     props;
@@ -9,7 +11,12 @@ export default function PersonForm({ ...props }) {
       return;
     }
     const nameAdd = { name: newName, number: newNumber };
-    setPersons(persons.concat(nameAdd));
+
+    axios.post("http://localhost:3001/persons", nameAdd).then((response) => {
+      console.log(response.data);
+      setPersons(persons.concat(response.data));
+    });
+
     setNewName("");
     setNewNumber("");
   };
