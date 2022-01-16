@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import ErrorMsg from "./components/ErrorMsg";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
@@ -10,11 +10,22 @@ function App() {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    show: false,
+    msg: "",
+    type: "",
+  });
+
+  const showError = (show = false, msg = "", type = "") => {
+    setErrorMessage({ show, msg, type });
+  };
 
   useEffect(() => {
-    getAll().then((res) => {
-      setPersons(res);
-    });
+    getAll()
+      .then((res) => {
+        setPersons(res);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const newPerson = persons.filter((per) => {
@@ -27,7 +38,10 @@ function App() {
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Delete ${name}`)) {
-      update(id);
+      update(id).catch((err) => {
+        console.log(err);
+      });
+      showError(true, `deleted ${name}`, "error");
       const a = persons.filter((p) => p.id !== id);
       setPersons(a);
     } else {
@@ -47,14 +61,28 @@ function App() {
         console.log("update", updatePerson);
         const newPerson = { ...updatePerson, number: newNumber };
         console.log("object", newPerson);
-        change(updatePerson.id, newPerson);
-        setPersons(
-          persons.map((a) => {
-            return a.id === newPerson.id ? newPerson : a;
+        change(updatePerson.id, newPerson)
+          .then((res) => {
+            setPersons(
+              persons.map((a) => {
+                return a.id === res.id ? res : a;
+              })
+            );
+            setNewName("");
+            setNewNumber("");
+            showError(true, "changed number", "error");
           })
-        );
-        setNewName("");
-        setNewNumber("");
+          .catch((error) => {
+            showError(
+              true,
+              `information of ${updatePerson.name} had already been removed from server`,
+              "red"
+            );
+            const a = persons.filter((p) => p.id !== updatePerson.id);
+            setPersons(a);
+            setNewName("");
+            setNewNumber("");
+          });
         return;
       }
     }
@@ -62,6 +90,7 @@ function App() {
 
     create(nameAdd).then((res) => {
       setPersons(persons.concat(res));
+      showError(true, `added ${nameAdd.name}`, "error");
       setNewName("");
       setNewNumber("");
     });
@@ -70,6 +99,9 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      {errorMessage.show && (
+        <ErrorMsg {...errorMessage} deleteMsg={showError} />
+      )}
       <Filter search={search} setSearch={setSearch} />
       <h2>add a new</h2>
       <PersonForm
