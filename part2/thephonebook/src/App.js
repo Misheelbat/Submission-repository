@@ -3,7 +3,7 @@ import ErrorMsg from "./components/ErrorMsg";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
-import { getAll, update, change, create } from "./services/notes";
+import { getAll, update, change, create } from "./services/persons";
 
 function App() {
   const [persons, setPersons] = useState([]);
