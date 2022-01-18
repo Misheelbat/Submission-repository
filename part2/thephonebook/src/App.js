@@ -88,12 +88,17 @@ function App() {
     }
     const nameAdd = { name: newName, number: newNumber };
 
-    create(nameAdd).then((res) => {
-      setPersons(persons.concat(res));
-      showError(true, `added ${nameAdd.name}`, "error");
-      setNewName("");
-      setNewNumber("");
-    });
+    create(nameAdd)
+      .then((res) => {
+        setPersons(persons.concat(res));
+        showError(true, `added ${nameAdd.name}`, "error");
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        const msg = JSON.stringify(error.response.data);
+        showError(true, msg, "red");
+      });
   };
 
   return (
