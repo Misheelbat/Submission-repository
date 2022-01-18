@@ -98,6 +98,8 @@ function App() {
       .catch((error) => {
         const msg = JSON.stringify(error.response.data);
         showError(true, msg, "red");
+        setNewName("");
+        setNewNumber("");
       });
   };
 
