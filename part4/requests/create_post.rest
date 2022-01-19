@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "God Emperor of Dune",
+    "author": "Frank Herbert",
+    "url": "dune.com",
+    "likes": 60
+}
