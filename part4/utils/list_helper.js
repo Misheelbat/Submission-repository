@@ -20,7 +20,7 @@ const totalLikes = (blogs) => {
     }, 0);
   return total;
 };
-
+// Blog with the most number of likes
 const favoriteBlog = (blogs) => {
   const numberOfLikes = blogs.map((blog) => blog.likes);
   const mostLikes = Math.max(...numberOfLikes);
@@ -28,6 +28,7 @@ const favoriteBlog = (blogs) => {
   return blogs[index];
 };
 
+// author with most number of blogs written
 const mostBlog = (blogs) => {
   const author = blogs.map((b) => b.author);
   const all = _.uniq(author);
@@ -38,7 +39,7 @@ const mostBlog = (blogs) => {
     every.push(single);
   }
   let larg = every.reduce(
-    (max, el, i, arr) => (el.length > arr[max].length ? i : max),
+    (max, larg, i, arr) => (larg.length > arr[max].length ? i : max),
     0
   );
 
@@ -48,6 +49,8 @@ const mostBlog = (blogs) => {
   };
   return mostLikedAuthor;
 };
+
+// author with most number of total likes
 const mostLikes = (blogs) => {
   const author = blogs.map((b) => b.author);
   const all = _.uniq(author);
@@ -57,7 +60,7 @@ const mostLikes = (blogs) => {
     every.push(single);
   }
   let arrayOfLikes = every.map((e) =>
-    e.map((l) => l.likes).reduce((t, a) => (t += a), 0)
+    e.map((l) => l.likes).reduce((total, likes) => (total += likes), 0)
   );
   const mostLikes = Math.max(...arrayOfLikes);
   const likedAuthor = {
