@@ -2,14 +2,10 @@ const blogRouter = require('express').Router();
 const Blog = require('../models/blog');
 
 // get all blogs
-blogRouter.get('/', (request, response) => {
-  Blog.find({})
-    .then((blogs) => {
-      response.json(blogs.map((b) => b.toJSON()));
-    })
-    .catch((err) => {
-      console.log('err in get', err.message);
-    });
+blogRouter.get('/', async (request, response) => {
+  const blogs = await Blog.find({});
+
+  response.json(blogs.map((b) => b.toJSON()));
 });
 
 //get single blog by id
