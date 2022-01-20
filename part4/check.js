@@ -30,9 +30,6 @@ let larg = every.reduce(
 let a = every.map((e) => e.map((l) => l.likes).reduce((t, a) => (t += a), 0));
 const mostLikes = Math.max(...a);
 
-
-
 console.log('likes', a);
 console.log('biggest', mostLikes);
 console.log('index', a.indexOf(mostLikes));
-console.log('author', likedAuthor);
