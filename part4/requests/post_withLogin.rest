@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxZWIwMGFkMGM1MDNhYzRkYmFiOWVlMSIsImlhdCI6MTY0Mjg3MTM1NX0.VHroBWWLlo7k-i7hTBcuV3K1VSGs52DHRGidw-y0-qE
+
+{
+  "title": "Pensor's demon",
+  "author": "ursula",
+  "url": "pensor.com"  
+}
