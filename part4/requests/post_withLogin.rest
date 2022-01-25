@@ -1,9 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYxZWIwMGFkMGM1MDNhYzRkYmFiOWVlMSIsImlhdCI6MTY0Mjg3MTM1NX0.VHroBWWLlo7k-i7hTBcuV3K1VSGs52DHRGidw-y0-qE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pc2hlZWwiLCJpZCI6IjYxZjAxZmMxYWZmMmI5MWU1ZWRhOWZhMSIsImlhdCI6MTY0MzEyNjg4MX0.q-bfgqvpL727LFEz9N0nEEs3oyyvclrsl3lAdUPiIPs
 
 {
-  "title": "Penric's travel",
-  "author": "ursula",
-  "url": "pensor.com"  
+    "author": "bujord",
+    "title": "vorkisagen",
+    "url": "miles.com",
+    "likes": 10,
+    "userId": "61f01fc1aff2b91e5eda9fa1"
 }

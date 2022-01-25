@@ -2,9 +2,9 @@ POST  http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "author": "will",
-    "title": "wintersteel",
-    "url": "winter.com",
+    "author": "bujord",
+    "title": "vorkisagen",
+    "url": "miles.com",
     "likes": 10,
-    "userId": "61eb00ad0c503ac4dbab9ee1"
+    "userId": "61f01fc1aff2b91e5eda9fa1"
 }
