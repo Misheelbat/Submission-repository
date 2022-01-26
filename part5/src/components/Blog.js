@@ -1,8 +1,9 @@
-import React from 'react'
-const Blog = ({blog}) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>  
-)
+import React from 'react';
 
-export default Blog
+export default function Blog({ blog }) {
+  return (
+    <div>
+      {blog.title} {blog.author}
+    </div>
+  );
+}
