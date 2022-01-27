@@ -8,6 +8,7 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
     try {
       const blog = await blogService.create(newBlog);
       setBlogs(blogs.concat(blog));
+      setBlogs({ title: '', author: '', url: '' });
       showError(true, 'created blog post', 'success');
     } catch (error) {
       showError(true, 'could not create blog', 'failure');

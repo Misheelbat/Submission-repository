@@ -26,5 +26,12 @@ const update = async (id, newObject) => {
   const response = await axios.put(`${baseUrl}/${id}`, newObject, config);
   return response.data;
 };
+const deleteBlog = async id => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const response = axios.delete(`${baseUrl}/${id}`, config);
+  return response.data;
+};
 // eslint-disable-next-line
-export default { getAll, create, update, setToken };
+export default { getAll, create, update, setToken, deleteBlog };

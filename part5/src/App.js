@@ -37,7 +37,32 @@ const App = () => {
     showError(true, 'user logged out', 'success');
     setUser(null);
   };
-
+  const sortLikes = (a, b) => {
+    return b.likes - a.likes;
+  };
+  const updateLikes = async newBlog => {
+    try {
+      const updatedBlog = await blogService.update(newBlog.id, newBlog);
+      const filteredBlog = blogs.map(blog =>
+        blog.id !== newBlog.id ? blog : updatedBlog
+      );
+      setBlogs(filteredBlog);
+    } catch (error) {
+      showError(true, error.message, 'failure');
+    }
+  };
+  const removeBlog = async newBlog => {
+    try {
+      const ok = window.confirm(`remove ${newBlog.title}?`);
+      if (ok) {
+        await blogService.deleteBlog(newBlog.id);
+        setBlogs(blogs.filter(blog => blog.id !== newBlog.id));
+        showError(true, 'Blog deleted', 'success');
+      }
+    } catch (error) {
+      showError(true, error.message, 'failure');
+    }
+  };
   return (
     <div>
       {errorMsg.show && <Notification showError={showError} {...errorMsg} />}
@@ -57,7 +82,17 @@ const App = () => {
           <CreateBlog setBlogs={setBlogs} blogs={blogs} showError={showError} />
         </Togglable>
       )}
-      {user !== null && blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+      {user !== null &&
+        blogs
+          .sort(sortLikes)
+          .map(blog => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              updateLikes={updateLikes}
+              removeBlog={removeBlog}
+            />
+          ))}
     </div>
   );
 };
