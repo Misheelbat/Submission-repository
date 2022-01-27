@@ -23,6 +23,7 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
         <div>
           title:
           <input
+            id="title"
             type="text"
             value={newBlog.title}
             onChange={e => setNewBlog({ ...newBlog, title: e.target.value })}
