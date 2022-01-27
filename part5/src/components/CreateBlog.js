@@ -10,8 +10,8 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
       setBlogs(blogs.concat(blog));
       showError(true, 'created blog post', 'success');
     } catch (error) {
-      showError(true, "couldn't create blog", 'failure');
-      console.log('cant post new blog', error.message);
+      showError(true, 'could not create blog', 'failure');
+      console.log('cannot post new blog', error.message);
     }
   };
 
@@ -20,7 +20,7 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
       <h1>create new Blog</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          title:{' '}
+          title:
           <input
             type="text"
             value={newBlog.title}
@@ -28,7 +28,7 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
           />
         </div>
         <div>
-          author:{' '}
+          author:
           <input
             type="text"
             value={newBlog.author}
@@ -36,7 +36,7 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
           />
         </div>
         <div>
-          url:{' '}
+          url:
           <input
             type="text"
             value={newBlog.url}
