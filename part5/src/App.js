@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Blog from './components/Blog';
 import CreateBlog from './components/CreateBlog';
 import LoginApp from './components/LoginApp';
 import blogService from './services/blogs';
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
+import DisplayBlogs from './components/DisplayBlogs';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -37,9 +37,7 @@ const App = () => {
     showError(true, 'user logged out', 'success');
     setUser(null);
   };
-  const sortLikes = (a, b) => {
-    return b.likes - a.likes;
-  };
+
   const updateLikes = async newBlog => {
     try {
       const updatedBlog = await blogService.update(newBlog.id, newBlog);
@@ -63,6 +61,7 @@ const App = () => {
       showError(true, error.message, 'failure');
     }
   };
+
   return (
     <div>
       {errorMsg.show && <Notification showError={showError} {...errorMsg} />}
@@ -82,17 +81,13 @@ const App = () => {
           <CreateBlog setBlogs={setBlogs} blogs={blogs} showError={showError} />
         </Togglable>
       )}
-      {user !== null &&
-        blogs
-          .sort(sortLikes)
-          .map(blog => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              updateLikes={updateLikes}
-              removeBlog={removeBlog}
-            />
-          ))}
+      {user !== null && (
+        <DisplayBlogs
+          blogs={blogs}
+          removeBlog={removeBlog}
+          updateLikes={updateLikes}
+        />
+      )}
     </div>
   );
 };

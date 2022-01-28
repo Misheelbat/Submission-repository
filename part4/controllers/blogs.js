@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 blogRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 });
 
-  response.json(blogs.map((b) => b.toJSON()));
+  response.json(blogs.map(b => b.toJSON()));
 });
 
 //get single blog by id
@@ -64,7 +64,7 @@ blogRouter.delete('/:id', async (request, response) => {
   }
   await blog.remove();
   user.blogs = user.blogs.filter(
-    (b) => b.id.toString() !== request.params.id.toString()
+    b => b.id.toString() !== request.params.id.toString()
   );
   await user.save();
   response.status(204).end();

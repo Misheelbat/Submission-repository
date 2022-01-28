@@ -29,7 +29,7 @@ export default function LoginApp({ setUser, showError }) {
       <div>
         username
         <input
-          type="text"
+          id="username"
           value={username}
           name="Username"
           onChange={e => setUsername(e.target.value)}
@@ -38,13 +38,16 @@ export default function LoginApp({ setUser, showError }) {
       <div>
         password
         <input
+          id="password"
           type="text"
           value={password}
           name="Password"
           onChange={e => setPassword(e.target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button id="login-button" type="submit">
+        login
+      </button>
     </form>
   );
 }

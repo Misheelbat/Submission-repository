@@ -32,6 +32,7 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
         <div>
           author:
           <input
+            id="author"
             type="text"
             value={newBlog.author}
             onChange={e => setNewBlog({ ...newBlog, author: e.target.value })}
@@ -40,12 +41,15 @@ export default function CreateBlog({ setBlogs, blogs, showError }) {
         <div>
           url:
           <input
+            id="url"
             type="text"
             value={newBlog.url}
             onChange={e => setNewBlog({ ...newBlog, url: e.target.value })}
           />
         </div>
-        <button type="submit">create</button>
+        <button id="save" type="submit">
+          create
+        </button>
       </form>
     </div>
   );

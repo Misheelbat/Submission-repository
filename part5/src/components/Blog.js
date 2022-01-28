@@ -28,7 +28,10 @@ export default function Blog({ blog, updateLikes, removeBlog }) {
         <div>
           <div>{blogs.url}</div>
           <div>
-            {blogs.likes} <button onClick={handleLikes}>likes</button>
+            {blogs.likes}{' '}
+            <button id="likes" onClick={handleLikes}>
+              likes
+            </button>
           </div>
           <div>{blogs.user.username}</div>
           <button onClick={handleDelete}>remove</button>
