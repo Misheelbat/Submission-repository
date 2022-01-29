@@ -1,8 +1,3 @@
-
-
-const getId = () => (100000 * Math.random()).toFixed(0);
-
-
 const anecReducer = (state = [], action) => {
   switch (action.type) {
     case 'VOTE':
@@ -15,6 +10,8 @@ const anecReducer = (state = [], action) => {
     case 'NEW':
       const newAnectode = action.data;
       return state.concat(newAnectode);
+    case 'INIT':
+      return action.data;
     default:
       return state;
   }
@@ -26,11 +23,16 @@ export const incVote = id => {
     id,
   };
 };
-
+export const initServer = anec => {
+  return {
+    type: 'INIT',
+    data: anec,
+  };
+};
 export const newAnec = anec => {
   return {
     type: 'NEW',
-    data: { content: anec, id: getId(), votes: 0 },
+    data: anec,
   };
 };
 export default anecReducer;

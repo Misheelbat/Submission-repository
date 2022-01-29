@@ -7,7 +7,6 @@ export default function AnecdoteList() {
   let anecdotes = useSelector(state => state.anectodes);
   const filterValue = useSelector(state => state.filter);
   const dispatch = useDispatch();
-  console.log('filter', filterValue);
   anecdotes = anecdotes.filter(anec => {
     if (filterValue === null) {
       return anec;
