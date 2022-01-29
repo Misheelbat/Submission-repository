@@ -6,10 +6,13 @@ const noteReducer = (state = null, action) => {
       return state;
   }
 };
-export const sendMessage = note => {
-  return {
-    type: 'MSG',
-    notification: note,
+export const sendMessage = (note, time) => {
+  return async dispatch => {
+    dispatch({ type: 'MSG', notification: note });
+    const timer = setTimeout(() => {
+      dispatch({ type: 'MSG', notification: null });
+    }, time * 1000);
+    return () => clearTimeout(timer);
   };
 };
 

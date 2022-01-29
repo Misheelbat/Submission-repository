@@ -1,10 +1,11 @@
+import service from '../services/anecdotes';
 const anecReducer = (state = [], action) => {
   switch (action.type) {
     case 'VOTE':
-      const [vote] = state.filter(an => an.id === action.id);
+      const [vote] = state.filter(an => an.id === action.data.id);
       const newVote = { ...vote, votes: vote.votes + 1 };
       const newState = state.map(state =>
-        state.id !== action.id ? state : newVote
+        state.id !== action.data.id ? state : newVote
       );
       return newState;
     case 'NEW':
@@ -17,22 +18,31 @@ const anecReducer = (state = [], action) => {
   }
 };
 
-export const incVote = id => {
-  return {
-    type: 'VOTE',
-    id,
+export const incVote = newAnecdote => {
+  return async dispatch => {
+    const newObject = await service.update({
+      ...newAnecdote,
+      votes: newAnecdote.votes + 1,
+    });
+    dispatch({ type: 'VOTE', data: newObject });
   };
 };
-export const initServer = anec => {
-  return {
-    type: 'INIT',
-    data: anec,
+export const initServer = () => {
+  return async dispatch => {
+    const anecdote = await service.getAll();
+    dispatch({
+      type: 'INIT',
+      data: anecdote,
+    });
   };
 };
 export const newAnec = anec => {
-  return {
-    type: 'NEW',
-    data: anec,
+  return async dispatch => {
+    const newAnecdote = await service.createNew(anec);
+    dispatch({
+      type: 'NEW',
+      data: newAnecdote,
+    });
   };
 };
 export default anecReducer;

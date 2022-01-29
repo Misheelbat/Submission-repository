@@ -11,9 +11,9 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    service.getAll().then(anecdote => dispatch(initServer(anecdote)));
+    dispatch(initServer());
   }, [dispatch]);
-  
+
   return (
     <div>
       <Notification />

@@ -17,8 +17,8 @@ export default function AnecdoteList() {
     }
   });
   const vote = anecdote => {
-    dispatch(incVote(anecdote.id));
-    dispatch(sendMessage(`you voted ${anecdote.content}`));
+    dispatch(incVote(anecdote));
+    dispatch(sendMessage(`you voted ${anecdote.content}`, 5));
   };
   return (
     <div>
