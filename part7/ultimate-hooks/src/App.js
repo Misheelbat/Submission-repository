@@ -23,7 +23,7 @@ const useResource = baseUrl => {
   };
   useEffect(() => {
     fetch();
-  });
+  }, []);
   const create = async data => {
     const response = await axios.post(baseUrl, data);
     const res = response.data;
