@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import blogService from '../services/blogs';
+import { useDispatch } from 'react-redux';
+import { showAsync } from '../features/NotificationSlice';
 
-export default function CreateBlog({ setBlogs, blogs, showError }) {
+export default function CreateBlog({ setBlogs, blogs }) {
   const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' });
+  const dispatch = useDispatch();
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const blog = await blogService.create(newBlog);
       setBlogs(blogs.concat(blog));
       setBlogs({ title: '', author: '', url: '' });
-      showError(true, 'created blog post', 'success');
+      dispatch(showAsync({ msg: 'created blog post', type: 'success' }));
     } catch (error) {
-      showError(true, 'could not create blog', 'failure');
+      dispatch(showAsync({ msg: 'could not blog post', type: 'failure' }));
       console.log('cannot post new blog', error.message);
     }
   };

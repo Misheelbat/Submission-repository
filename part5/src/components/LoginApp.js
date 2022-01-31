@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
+import { useDispatch } from 'react-redux';
+import { showAsync } from '../features/NotificationSlice';
 
-export default function LoginApp({ setUser, showError }) {
+export default function LoginApp({ setUser }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const dispatch = useDispatch();
   const handleLogin = async e => {
     e.preventDefault();
     try {
       const user = await loginService.login({ username, password });
-
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user));
 
       blogService.setToken(user.token);
-      showError(true, 'logged in', 'success');
+      dispatch(showAsync({ msg: 'logged in', type: 'success' }));
       setUser(user);
     } catch (error) {
-      showError(true, 'wrong username or password', 'failure');
+      dispatch(
+        showAsync({ msg: 'wrong username or password', type: 'failure' })
+      );
       setUsername('');
       setPassword('');
       console.log('credentials', error.message);

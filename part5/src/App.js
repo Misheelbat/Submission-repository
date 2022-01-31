@@ -5,15 +5,15 @@ import blogService from './services/blogs';
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
 import DisplayBlogs from './components/DisplayBlogs';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { showAsync } from './features/NotificationSlice';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [errorMsg, setErrorMsg] = useState({ show: false, msg: '', type: '' });
-
-  const showError = (show = false, msg = '', type = '') => {
-    setErrorMsg({ show, msg, type });
-  };
+  const errMsg = useSelector(state => state.notification);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +34,7 @@ const App = () => {
 
   const handleLogout = () => {
     window.localStorage.clear();
-    showError(true, 'user logged out', 'success');
+    dispatch(showAsync({ msg: 'user logged out', type: 'success' }));
     setUser(null);
   };
 
@@ -46,7 +46,7 @@ const App = () => {
       );
       setBlogs(filteredBlog);
     } catch (error) {
-      showError(true, error.message, 'failure');
+      dispatch(showAsync({ msg: error.message, type: 'failure' }));
     }
   };
   const removeBlog = async newBlog => {
@@ -55,20 +55,20 @@ const App = () => {
       if (ok) {
         await blogService.deleteBlog(newBlog.id);
         setBlogs(blogs.filter(blog => blog.id !== newBlog.id));
-        showError(true, 'Blog deleted', 'success');
+        dispatch(showAsync({ msg: 'Blog deleted', type: 'success' }));
       }
     } catch (error) {
-      showError(true, error.message, 'failure');
+      dispatch(showAsync({ msg: error.message, type: 'failure' }));
     }
   };
 
   return (
     <div>
-      {errorMsg.show && <Notification showError={showError} {...errorMsg} />}
+      {errMsg.show && <Notification />}
       <h2>blogs</h2>
       {user === null ? (
         <Togglable buttonLabel="login" buttonEnd="cancel">
-          <LoginApp setUser={setUser} showError={showError} />
+          <LoginApp setUser={setUser} />
         </Togglable>
       ) : (
         <div>
@@ -78,7 +78,7 @@ const App = () => {
       <br />
       {user !== null && (
         <Togglable buttonLabel="create new blog" buttonEnd="cancel">
-          <CreateBlog setBlogs={setBlogs} blogs={blogs} showError={showError} />
+          <CreateBlog setBlogs={setBlogs} blogs={blogs} />
         </Togglable>
       )}
       {user !== null && (

@@ -1,16 +1,9 @@
 import React from 'react';
-import { useEffect } from 'react';
 import './Notification.css';
+import { useSelector } from 'react-redux';
 
-export default function Notification({ showError, type, msg }) {
-  
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      showError(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line
-  }, []);
+export default function Notification() {
+  const { msg, type } = useSelector(state => state.notification);
 
   if (msg === null) {
     return null;
